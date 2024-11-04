@@ -1,0 +1,33 @@
+import java.util.Scanner;
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Welcome to the game. There is a random whole number between 1-100. You have unlimited tries. If you want to quit write: stop. Input your guess below");
+        int UserInput = 0;
+        Random rand = new Random();
+        int GeneratedNumber = rand.nextInt(100) + 1;
+        String EndGame = "Stop";
+        do {
+            if (reader.hasNextInt()) {
+                UserInput = reader.nextInt();
+                System.out.println("This isn't the correct number");
+                if (UserInput > GeneratedNumber) {
+                    System.out.println("Input a smaller number");
+                }
+                if (UserInput < GeneratedNumber) {
+                    System.out.println("Input a bigger number");
+                }
+                if (UserInput == GeneratedNumber) {
+                    System.out.println("You Won. Congratulations!");
+                }
+            } else {
+                System.out.println("You quit");
+                break;
+            }
+
+
+        } while (true);
+    }
+}
+
