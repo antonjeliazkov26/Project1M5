@@ -1,0 +1,55 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+import java.util.Scanner;
+
+public class MathAssessmentTool {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine().trim();
+        String filename = name + "-answers.txt";
+
+        try (FileWriter writer = new FileWriter(filename)) {
+            for (int i = 1; i <= 5; i++) {
+                int num1 = random.nextInt(100);  // 0 to 99
+                int num2 = random.nextInt(100);  // 0 to 99
+                char operator;
+                int correctAnswer = 0;
+
+                int op = random.nextInt(3);  // 0: +, 1: -, 2: *
+                switch (op) {
+                    case 0:
+                        operator = '+';
+                        correctAnswer = num1 + num2;
+                        break;
+                    case 1:
+                        operator = '-';
+                        correctAnswer = num1 - num2;
+                        break;
+                    default:
+                        operator = '*';
+                        correctAnswer = num1 * num2;
+                        break;
+                }
+
+                System.out.printf("Question %d: %d %c %d = ? ", i, num1, operator, num2);
+                int userAnswer = scanner.nextInt();
+                boolean isCorrect = (userAnswer == correctAnswer);
+
+                writer.write(String.format("Q%d: %d %c %d = %d | Your Answer: %d | %s\n",
+                        i, num1, operator, num2, correctAnswer, userAnswer,
+                        isCorrect ? "Correct" : "Incorrect"));
+            }
+
+            System.out.println("Assessment complete. Answers saved to: " + filename);
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+
+        scanner.close();
+    }
+}
